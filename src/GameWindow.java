@@ -1,6 +1,6 @@
 import java.awt.*;
 
-class GameWindow extends Frame implements GamePanelObjects {
+class GameWindow extends Frame implements GameSettings {
 
     public static void main(String[] args) {
         GameWindow playGame = new GameWindow();
@@ -13,6 +13,8 @@ class GameWindow extends Frame implements GamePanelObjects {
 
         // Вызов объекта панели глвного меню
         PanelGenMenu genMenu = new PanelGenMenu();
+        // Вызов объекта панели игрового поля
+        PanelGameMap gameMap = new PanelGameMap();
         // Вызов объекта панели меню настроек
         PanelSetMenu setMenu = new PanelSetMenu();
 
@@ -25,7 +27,12 @@ class GameWindow extends Frame implements GamePanelObjects {
         setVisible(true);
 
         // Проверка размеров окна приложения
-        System.out.println(pnlGenMenu.getWidth());
-        System.out.println(pnlGenMenu.getHeight());
+//        System.out.println(pnlGenMenu.getWidth());
+//        System.out.println(pnlGenMenu.getHeight());
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        g.drawLine(10,10,100,100);
     }
 }

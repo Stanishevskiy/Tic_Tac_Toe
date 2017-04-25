@@ -2,9 +2,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class PanelGenMenu extends Frame implements GamePanelObjects {
+class PanelGenMenu extends Panel implements GamePanelObjects {
 
     PanelGenMenu() {
+
 
         pnlGenMenu.setLayout(new GridBagLayout());          // Задаем компоновщик панели
         pnlApp.add(pnlGenMenu, "General Menu");  // Добавляем нашу панель к компоновщику карт
@@ -52,12 +53,21 @@ class PanelGenMenu extends Frame implements GamePanelObjects {
         gbc.ipadx = 172;
         pnlGenMenu.add(btnExit, gbc);
 
+
+
         // Обработка событий
+        // Переход на игровое поле
+        btnStartGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(pnlApp, "Game Field");
+            }
+        });
         // Переход в меню настроек по нажатию Settings
         btnSettings.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cardLayout.next(pnlApp);
+                cardLayout.show(pnlApp, "Settings Menu");
             }
         });
         // Закрытие программы по нажатию Exit

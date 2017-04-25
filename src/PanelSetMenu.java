@@ -2,7 +2,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class PanelSetMenu extends Frame implements GamePanelObjects {
+class PanelSetMenu extends Panel implements GameSettings {
 
     PanelSetMenu() {
 
@@ -187,16 +187,15 @@ class PanelSetMenu extends Frame implements GamePanelObjects {
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 1;
         gbc.gridy = 11;
-        Choice chsGameFieldSize = new Choice();
-        chsGameFieldSize.add("3");
-        chsGameFieldSize.add("4");
-        chsGameFieldSize.add("5");
-        chsGameFieldSize.add("6");
-        chsGameFieldSize.add("7");
-        chsGameFieldSize.add("8");
-        chsGameFieldSize.add("9");
-        chsGameFieldSize.setFont(fntSetElements);
-        pnlSettings.add(chsGameFieldSize, gbc);
+        chsCellsCount.add("3");
+        chsCellsCount.add("4");
+        chsCellsCount.add("5");
+        chsCellsCount.add("6");
+        chsCellsCount.add("7");
+        chsCellsCount.add("8");
+        chsCellsCount.add("9");
+        chsCellsCount.setFont(fntSetElements);
+        pnlSettings.add(chsCellsCount, gbc);
 
         gbc.anchor = GridBagConstraints.EAST;
         gbc.gridx = 0;
@@ -208,7 +207,6 @@ class PanelSetMenu extends Frame implements GamePanelObjects {
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 1;
         gbc.gridy = 12;
-        Choice chsCombToWin = new Choice();
         chsCombToWin.add("3");
         chsCombToWin.add("4");
         chsCombToWin.add("5");
@@ -234,7 +232,7 @@ class PanelSetMenu extends Frame implements GamePanelObjects {
         btnToGenMenu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cardLayout.previous(pnlApp);
+                cardLayout.show(pnlApp, "General Menu");
             }
         });
     }
