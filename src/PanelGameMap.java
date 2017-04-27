@@ -8,7 +8,7 @@ class PanelGameMap extends Panel implements GameSettings, KeyListener {
         pnlGameField.setLayout(new GridBagLayout());
         pnlApp.add(pnlGameField, "Game Field");
 
-        pnlApp.setVisible(false);
+//        pnlApp.setVisible(false);
 
 //        Frame gameField = new Frame();
 //        gameField.add(pnlGameField);
