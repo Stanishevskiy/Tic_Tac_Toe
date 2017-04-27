@@ -33,6 +33,6 @@ class GameWindow extends Frame implements GameSettings {
 
     @Override
     public void paint(Graphics g) {
-        g.drawLine(10,10,100,100);
+        g.drawLine(10,10,200,200);
     }
 }
