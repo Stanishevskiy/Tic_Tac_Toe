@@ -2,12 +2,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class PanelGenMenu extends Panel implements GamePanelObjects {
+class PanelGenMenu extends GameSettings {
 
     PanelGenMenu() {
-
-
-        pnlGenMenu.setLayout(new GridBagLayout());          // Задаем компоновщик панели
+        setLayout(new GridBagLayout());          // Задаем компоновщик панели
+        pnlGenMenu = this;
         pnlApp.add(pnlGenMenu, "General Menu");  // Добавляем нашу панель к компоновщику карт
 
         // Название игры
@@ -52,6 +51,9 @@ class PanelGenMenu extends Panel implements GamePanelObjects {
         gbc.gridy = 4;
         gbc.ipadx = 172;
         pnlGenMenu.add(btnExit, gbc);
+
+        pnlGenMenu.setVisible(true);
+        pnlApp.setVisible(true);
 
 
 
