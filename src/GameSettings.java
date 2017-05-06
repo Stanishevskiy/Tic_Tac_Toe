@@ -6,6 +6,8 @@ class GameSettings extends Panel implements CardPanels {
     protected static Panel pnlGameMap = new Panel();
     protected static Panel pnlSetMenu = new Panel();
     protected static GridBagConstraints gbc = new GridBagConstraints();
+    protected static TextField txtNamePlayer1;
+    protected static TextField txtNamePlayer2;
     protected static Choice chsTypePlayer1 = new Choice();
     protected static Choice chsTypePlayer2 = new Choice();
     protected static Choice chsFigureTypePlayer1 = new Choice();

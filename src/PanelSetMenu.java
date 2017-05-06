@@ -48,7 +48,7 @@ class PanelSetMenu extends GameSettings {
         gbc.gridx = 1;
         gbc.gridy = 2;
         gbc.ipadx = 60;
-        TextField txtNamePlayer1 = new TextField("Player 1");
+        txtNamePlayer1 = new TextField("Player 1");
         txtNamePlayer1.setBackground(Color.LIGHT_GRAY);
         txtNamePlayer1.setFont(fntSetElements);
         pnlSetMenu.add(txtNamePlayer1, gbc);
@@ -135,7 +135,7 @@ class PanelSetMenu extends GameSettings {
         gbc.gridx = 1;
         gbc.gridy = 7;
         gbc.ipadx = 60;
-        TextField txtNamePlayer2 = new TextField("Player 2");
+        txtNamePlayer2 = new TextField("Player 2");
         txtNamePlayer2.setBackground(Color.LIGHT_GRAY);
         txtNamePlayer2.setFont(fntSetElements);
         pnlSetMenu.add(txtNamePlayer2, gbc);

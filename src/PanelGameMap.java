@@ -7,6 +7,8 @@ class PanelGameMap extends GameSettings {
     private int fieldHeight = 500;
     private Integer currentPlr = 1;
     private int oppositePlr = 2;
+    private String player1Name = "Player 1";
+    private String player2Name = "Player 2";
     private String typePlr1 = "Human";
     private String typePlr2 = "AI";
     private String figureTypePlayer1 = "Cross";
@@ -350,9 +352,9 @@ class PanelGameMap extends GameSettings {
                         checkLine(i, j, 1, 1, combToWin, player) ||
                         checkLine(i, j, 1, -1, combToWin, player)) {
                     if(player == 1)
-                        gameOver = " Player 1 WON";
+                        gameOver = " " + txtNamePlayer1.getText() + " WON";
                     if(player == 2)
-                        gameOver = " Player 2 WON";
+                        gameOver = " " + txtNamePlayer2.getText() + " WON";
                     return true;
                 }
             }
