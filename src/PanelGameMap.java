@@ -25,6 +25,7 @@ class PanelGameMap extends GameSettings {
     private int mouseY = 0;
     private int[][] mapCells = new int[cellsCount][cellsCount];
     private Random rndTurn = new Random();
+    private boolean aiSearchCombo = false;
     private String gameOver = "Nothing";
 
 //----------------------------------------------------------------------
@@ -62,6 +63,7 @@ class PanelGameMap extends GameSettings {
 
         // Добавляем панель игрового поля к перечню карт
         setBackground(Color.PINK);
+        setLayout(new GridLayout(3, 3));
         pnlApp.add(this, "Game Map");
 
         // Обработка клика по игровому полю с последующей постановкой фишки
@@ -93,8 +95,6 @@ class PanelGameMap extends GameSettings {
                 mapCells = new int[cellsCount][cellsCount];
             }
         });
-
-
     }
 
 //----------------------------------------------------------------------
@@ -112,6 +112,7 @@ class PanelGameMap extends GameSettings {
 
     @Override
     public void paint(Graphics g) {
+//        System.out.println(4);
         Graphics2D g2 = (Graphics2D) g;
 
         // Отрисовка сетки игрового поля
@@ -197,18 +198,17 @@ class PanelGameMap extends GameSettings {
                             break;
                     }
                 }
-
-                if(!gameOver.equals("Nothing")) {
-                    g2.setFont(new Font("Helvetica", Font.BOLD, 72));
-                    g2.setColor(Color.BLACK);
-                    g2.drawString(gameOver, 10, 200);
-                    g2.setColor(Color.ORANGE);
-                    g2.drawString(gameOver, 6, 196);
-                }
-
             }
         }
 
+        if(!gameOver.equals("Nothing") && !aiSearchCombo) {
+            g2.setFont(new Font("Helvetica", Font.BOLD, 72));
+            g2.setColor(Color.BLACK);
+            g2.drawString(gameOver, 10, 200);
+            g2.setColor(Color.ORANGE);
+            g2.drawString(gameOver, 6, 196);
+            gameOverWindow();
+        }
     }
 
 //----------------------------------------------------------------------
@@ -272,6 +272,7 @@ class PanelGameMap extends GameSettings {
     // Доработанный AI компьютера, который умеет блокировать выигрышные комбинации
     private void aiTurn() {
         int x = -1, y = -1;
+        aiSearchCombo = true;       // сигнализируем программе, что могут быть ложные срабатывания условия победы
 
         // ИИ ищет свои выигрышные комбинации. Если находит, запоминает
         for(int i = 0; i < cellsCount; i++)
@@ -314,6 +315,7 @@ class PanelGameMap extends GameSettings {
         // Подставляем фишку компьютера
         mapCells[y][x] = currentPlr;
         repaint();
+        aiSearchCombo = false;          // AI определился с ходом и походил походил
 
         // Смена игрока
         if(currentPlr == 1) {
@@ -325,6 +327,7 @@ class PanelGameMap extends GameSettings {
         }
     }
 
+//----------------------------------------------------------------------
 
     // Метод проверяет все возможные варианты завершения игры
     private void gameOver() {
@@ -384,5 +387,58 @@ class PanelGameMap extends GameSettings {
         }
 
         return true;
+    }
+
+//----------------------------------------------------------------------
+
+    private void gameOverWindow() {
+        System.out.println(9);
+
+//        Panel pnlGameOver = new Panel();
+//        pnlGameOver.setBackground(Color.LIGHT_GRAY);
+//        pnlGameOver.setLayout(new GridBagLayout());
+//        pnlGameMap.add(pnlGameOver, new GridLayout(2, 2));
+
+        Frame frmGameOver = new Frame();
+        frmGameOver.setBackground(Color.LIGHT_GRAY);
+        frmGameOver.setBounds(300, 50, 200, 200);
+        frmGameOver.setLayout(new GridBagLayout());
+
+        Button btnPlayAgain = new Button("Play Again");
+        Button btnMainMenu = new Button("Main Menu");
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 20;
+        gbc.weighty = 5;
+        frmGameOver.add(btnPlayAgain, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        frmGameOver.add(btnMainMenu, gbc);
+
+
+        frmGameOver.setVisible(true);
+
+
+        btnPlayAgain.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                gameOver = "Nothing";
+                for(int i = 0; i < cellsCount; i++)
+                    for(int j = 0; j < cellsCount; j++)
+                        mapCells[i][j] = 0;
+                frmGameOver.setVisible(false);
+                repaint();
+            }
+        });
+
+        btnMainMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frmGameOver.setVisible(false);
+                cardLayout.show(pnlApp, "General Menu");
+            }
+        });
     }
 }

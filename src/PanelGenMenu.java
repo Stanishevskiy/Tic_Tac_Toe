@@ -59,7 +59,6 @@ class PanelGenMenu extends GameSettings {
             public void actionPerformed(ActionEvent e) {
                 pnlGameMap = new PanelGameMap();         // Перед вызовом поля обновляем все игровые параметры
                 cardLayout.show(pnlApp, "Game Map");
-
             }
         });
         // Переход в меню настроек по нажатию Settings
