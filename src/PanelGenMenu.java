@@ -5,17 +5,16 @@ import java.awt.event.ActionListener;
 class PanelGenMenu extends GameSettings {
 
     PanelGenMenu() {
-        setLayout(new GridBagLayout());          // Задаем компоновщик панели
-        pnlGenMenu = this;
+        pnlGenMenu.setLayout(new GridBagLayout());          // Задаем компоновщик панели
+        pnlGenMenu.setBackground(Color.CYAN);
         pnlApp.add(pnlGenMenu, "General Menu");  // Добавляем нашу панель к компоновщику карт
 
         // Название игры
         // Задаем название
         Label lblGenMenu = new Label();
         lblGenMenu.setText("TIC-TAC-TOE");
-        lblGenMenu.setBackground(Color.LIGHT_GRAY);
         // Задаем шрифт
-        Font fntLbl = new Font("Helvetica", Font.BOLD, 54);
+        Font fntLbl = new Font("lblGenMenu", Font.BOLD, 54);
         lblGenMenu.setFont(fntLbl);
         lblGenMenu.setSize(150, 40);
         // Задаем параметры компоновщика и добавляем на панель
@@ -31,7 +30,7 @@ class PanelGenMenu extends GameSettings {
         Button btnScore = new Button("Score");
         Button btnExit = new Button("Exit");
         // Задаем шрифт
-        Font fntBtn = new Font("Helvetica", Font.BOLD, 44);
+        Font fntBtn = new Font("btnGenMenu", Font.BOLD, 44);
         btnStartGame.setFont(fntBtn);
         btnSettings.setFont(fntBtn);
         btnScore.setFont(fntBtn);
@@ -52,17 +51,15 @@ class PanelGenMenu extends GameSettings {
         gbc.ipadx = 172;
         pnlGenMenu.add(btnExit, gbc);
 
-        pnlGenMenu.setVisible(true);
-        pnlApp.setVisible(true);
-
-
 
         // Обработка событий
         // Переход на игровое поле
         btnStartGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(pnlApp, "Game Field");
+                pnlGameMap = new PanelGameMap();         // Перед вызовом поля обновляем все игровые параметры
+                cardLayout.show(pnlApp, "Game Map");
+
             }
         });
         // Переход в меню настроек по нажатию Settings
@@ -79,6 +76,5 @@ class PanelGenMenu extends GameSettings {
                 System.exit(0);
             }
         });
-
     }
 }

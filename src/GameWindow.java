@@ -15,8 +15,6 @@ class GameWindow extends Frame implements CardPanels {
 
         // Вызов объекта панели глвного меню
         PanelGenMenu genMenu = new PanelGenMenu();
-        // Вызов объекта панели игрового поля
-//        PanelGameMap gameMap = new PanelGameMap();
         // Вызов объекта панели меню настроек
         PanelSetMenu setMenu = new PanelSetMenu();
 
