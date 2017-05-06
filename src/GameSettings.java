@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.util.Random;
 
 class GameSettings extends Panel implements CardPanels {
     // Переменные содержат объекты панелей и их компоненты

@@ -43,7 +43,7 @@ class PanelGameMap extends GameSettings {
         // Устанавливаем цвет фишки игроков
         if( !figureColorPlayer1S.equals(chsFigureColorPlayer1.getSelectedItem()) ) {
             figureColorPlayer1S = chsFigureColorPlayer1.getSelectedItem();
-            figureColorPlayer1 = selectColor(figureColorPlayer2S, figureColorPlayer1);
+            figureColorPlayer1 = selectColor(figureColorPlayer1S, figureColorPlayer1);
         }
         if( !figureColorPlayer2S.equals(chsFigureColorPlayer2.getSelectedItem()) ) {
             figureColorPlayer2S = chsFigureColorPlayer2.getSelectedItem();
@@ -86,6 +86,9 @@ class PanelGameMap extends GameSettings {
             public void componentResized(ComponentEvent e) {
                 width();
                 height();
+                cellWidth = fieldWidth/cellsCount;
+                cellHeight = fieldHeight/cellsCount;
+                mapCells = new int[cellsCount][cellsCount];
             }
         });
 
