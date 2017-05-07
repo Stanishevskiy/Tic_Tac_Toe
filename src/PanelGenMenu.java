@@ -68,6 +68,13 @@ class PanelGenMenu extends GameSettings {
                 cardLayout.show(pnlApp, "Settings Menu");
             }
         });
+        // Переход в меню с рейтингами
+        btnScore.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardLayout.show(pnlApp, "Score Menu");
+            }
+        });
         // Закрытие программы по нажатию Exit
         btnExit.addActionListener(new ActionListener() {
             @Override

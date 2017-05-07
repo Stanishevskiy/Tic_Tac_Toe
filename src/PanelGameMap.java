@@ -202,7 +202,7 @@ class PanelGameMap extends GameSettings {
         }
 
         if(!gameOver.equals("Nothing") && !aiSearchCombo) {
-            g2.setFont(new Font("Helvetica", Font.BOLD, 72));
+            g2.setFont(new Font("gameOver", Font.BOLD, 72));
             g2.setColor(Color.BLACK);
             g2.drawString(gameOver, 10, 200);
             g2.setColor(Color.ORANGE);

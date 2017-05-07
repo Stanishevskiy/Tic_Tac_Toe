@@ -18,6 +18,8 @@ class GameWindow extends Frame implements CardPanels {
         // Вызов объекта панели меню настроек
         PanelSetMenu setMenu = new PanelSetMenu();
 
+        PanelScoreMenu scoreMenu = new PanelScoreMenu();
+
         add(pnlApp);
 
         setVisible(true);

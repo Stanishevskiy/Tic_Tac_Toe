@@ -13,7 +13,7 @@ class PanelSetMenu extends GameSettings {
 
         // Заглавие меню
         Label lblSettings = new Label("Settings");
-        Font fntLblSettings = new Font("Helvetica", Font.BOLD, 28);
+        Font fntLblSettings = new Font("lblScore", Font.BOLD, 28);
         lblSettings.setFont(fntLblSettings);
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.gridx = 0;
@@ -24,7 +24,7 @@ class PanelSetMenu extends GameSettings {
         pnlSetMenu.add(lblSettings, gbc);
 
         // Добавляем составляющие меню
-        Font fntSetElements = new Font("Helvetica", Font.BOLD, 18);
+        Font fntSetElements = new Font("setElements", Font.BOLD, 18);
         // Настройки игрока 1
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridwidth = 1;
@@ -248,7 +248,7 @@ class PanelSetMenu extends GameSettings {
         gbc.gridy = 13;
         gbc.ipady = 10;
         gbc.gridwidth = 2;
-        Button btnToGenMenu = new Button("Back To Menu");
+        Button btnToGenMenu = new Button("Back to Menu");
         btnToGenMenu.setFont(fntSetElements);
         pnlSetMenu.add(btnToGenMenu, gbc);
 
