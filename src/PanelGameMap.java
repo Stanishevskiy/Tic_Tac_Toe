@@ -404,16 +404,20 @@ class PanelGameMap extends GameSettings {
         frmGameOver.setBounds(300, 50, 200, 200);
         frmGameOver.setLayout(new GridBagLayout());
 
+        Font fntGameOver = new Font("GameOver", Font.BOLD, 18);
         Button btnPlayAgain = new Button("Play Again");
         Button btnMainMenu = new Button("Main Menu");
+        btnPlayAgain.setFont(fntGameOver);
+        btnMainMenu.setFont(fntGameOver);
 
+        gbc.anchor = GridBagConstraints.CENTER;
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.weightx = 20;
         gbc.weighty = 5;
         frmGameOver.add(btnPlayAgain, gbc);
 
-        gbc.gridx = 1;
+        gbc.gridx = 0;
         gbc.gridy = 1;
         frmGameOver.add(btnMainMenu, gbc);
 

@@ -121,3 +121,4 @@ class PanelScoreMenu extends GameSettings {
         });
     }
 }
+
