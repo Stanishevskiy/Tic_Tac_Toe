@@ -78,7 +78,7 @@ class PanelScoreMenu extends GameSettings {
         Panel pnlScoreRating = new Panel(new BorderLayout());
         pnlScoreRating.setBackground(Color.CYAN);
         pnlScoreMenu.add(pnlScoreRating, BorderLayout.CENTER);
-        TextArea txtArRating = new TextArea("First Line", 10, 2, TextArea.SCROLLBARS_BOTH);
+        TextArea txtArRating = new TextArea("First Line", 10, 2, TextArea.SCROLLBARS_NONE);
         Font fntRatArea = new Font("RateArea", Font.BOLD, 16);
         txtArRating.setBackground(Color.GREEN);
         txtArRating.setFont(fntRatArea);
