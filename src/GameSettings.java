@@ -17,4 +17,7 @@ class GameSettings extends Panel implements CardPanels {
     protected static Choice chsFigureColorPlayer2 = new Choice();
     protected static Choice chsCellsCount = new Choice();
     protected static Choice chsCombToWin = new Choice();
+    
+    protected static String player = "Player1";
+    protected static int score = 0;
 }

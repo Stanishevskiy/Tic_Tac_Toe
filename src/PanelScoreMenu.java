@@ -4,8 +4,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-class PanelScoreMenu extends GameSettings {
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
+class PanelScoreMenu extends GameSettings {
+	Connection connection;
+	Statement stmt;
+	
+	public void getRefreshDB() {
+		refreshDB();
+	}
+	
     PanelScoreMenu() {
         pnlScoreMenu.setLayout(new BorderLayout());
         pnlApp.add(pnlScoreMenu, "Score Menu");
@@ -79,7 +91,7 @@ class PanelScoreMenu extends GameSettings {
         pnlScoreRating.setBackground(Color.CYAN);
         pnlScoreMenu.add(pnlScoreRating, BorderLayout.CENTER);
         TextArea txtArRating = new TextArea("First Line", 10, 2, TextArea.SCROLLBARS_NONE);
-        Font fntRatArea = new Font("RateArea", Font.BOLD, 16);
+        Font fntRatArea = new Font("RateArea", Font.BOLD, 28);
         txtArRating.setBackground(Color.GREEN);
         txtArRating.setFont(fntRatArea);
         pnlScoreRating.add(txtArRating, BorderLayout.CENTER);
@@ -97,8 +109,35 @@ class PanelScoreMenu extends GameSettings {
         gbc.ipadx = 50;
         gbc.ipady = 10;
         pnlExitToMenu.add(btnExitToMenu, gbc);
-
-
+        
+        // Добавляем БД к нашему проекту
+        try {
+			connectDB();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        
+//        try {
+//			showTable();
+//		} catch (SQLException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+        System.out.println(player);
+        System.out.println(score);
+      
+        // Отображаем содержимое БД
+        try {
+        String str = "SELECT * FROM score ORDER BY score DESC";
+        ResultSet rs = stmt.executeQuery(str);
+        txtArRating.setText("");
+        while(rs.next()) {
+        	txtArRating.append(rs.getString("name") + "          " + rs.getInt("score") + "\n");
+        }
+        } catch(Exception e) {
+        	e.printStackTrace();
+        }
+        
         // Данный анонимный класс регулирует, чтобы победная комбинация не превышала размер поля
         chsFieldSize.addItemListener(new ItemListener() {
             @Override
@@ -120,5 +159,32 @@ class PanelScoreMenu extends GameSettings {
             }
         });
     }
+    
+    // Метод отвечает за подключение к БД
+    private void connectDB() throws Exception {
+    	Class.forName("org.sqlite.JDBC");
+    	connection = DriverManager.getConnection("jdbc:sqlite:scoreTab");
+    	stmt = connection.createStatement();
+    }
+    
+    // Закрытие связи с БД после закрытия окна Frame
+    private void disconectDB() throws Exception {
+    	connection.close();
+    }
+    
+    // Обновления таблицы БД
+    private void refreshDB() {
+    	System.out.println(player + " " + score);
+    }
+    
+    // Выводим все данные из БД в текстовую область с рейтингом
+//    private void showTable() throws SQLException {
+//        String str = "SELECT * FROM score ORDER BY score DESC";
+//        ResultSet rs = stmt.executeQuery(str);
+//        while(rs.next()) {
+//        	
+//        	System.out.println(rs.getString("name") + " " + rs.getInt("score"));
+//        }
+//    }
 }
 

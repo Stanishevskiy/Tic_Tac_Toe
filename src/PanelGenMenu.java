@@ -72,7 +72,9 @@ class PanelGenMenu extends GameSettings {
         btnScore.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cardLayout.show(pnlApp, "Score Menu");
+            	pnlScoreMenu = new PanelScoreMenu();	// Перед переходом в таблицу с рейтингами обновляем ее
+
+            	cardLayout.show(pnlApp, "Score Menu");
             }
         });
         // Закрытие программы по нажатию Exit

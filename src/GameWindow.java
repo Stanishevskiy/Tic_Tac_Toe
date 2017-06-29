@@ -10,10 +10,10 @@ class GameWindow extends Frame implements CardPanels {
 
     private GameWindow() {
         // Задаем размеры окна приложения и его название
-        setBounds(300, 50, 516, 538);
+        setBounds(OX, OY, 516, 538);
         setTitle("Tic-Tac-Toe");
 
-        // Вызов объекта панели глвного меню
+        // Вызов объекта панели главного меню
         PanelGenMenu genMenu = new PanelGenMenu();
         // Вызов объекта панели меню настроек
         PanelSetMenu setMenu = new PanelSetMenu();

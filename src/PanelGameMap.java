@@ -27,7 +27,10 @@ class PanelGameMap extends GameSettings {
     private Random rndTurn = new Random();
     private boolean aiSearchCombo = false;
     private String gameOver = "Nothing";
-
+    
+    private String winnerName = player1Name; 
+    private int winnerScore = 0;
+    
 //----------------------------------------------------------------------
 
     PanelGameMap() {
@@ -82,6 +85,8 @@ class PanelGameMap extends GameSettings {
                         gameOver();
                     }
                 }
+                player = winnerName;	
+                score = winnerScore;
             }
         });
 
@@ -202,11 +207,15 @@ class PanelGameMap extends GameSettings {
         }
 
         if(!gameOver.equals("Nothing") && !aiSearchCombo) {
-            g2.setFont(new Font("gameOver", Font.BOLD, 72));
+            g2.setFont(new Font("gameOver", Font.BOLD, 54));
             g2.setColor(Color.BLACK);
-            g2.drawString(gameOver, 10, 200);
+            g2.drawString(gameOver, 10, 150);
             g2.setColor(Color.ORANGE);
-            g2.drawString(gameOver, 6, 196);
+            g2.drawString(gameOver, 6, 146);
+            g2.setColor(Color.BLACK);
+            g2.drawString("Score: " + score , 90, 200);
+            g2.setColor(Color.ORANGE);
+            g2.drawString("Score: " + score , 86, 196);
             gameOverWindow();
         }
     }
@@ -223,7 +232,7 @@ class PanelGameMap extends GameSettings {
     }
 
 
-    // Вспомогательные метод для упрощения кода
+    // Вспомогательный метод для упрощения кода
     private Color selectColor(String figColPlrStr, Color figColPlr) {
         Color resClr = figColPlr;
         switch(figColPlrStr) {
@@ -348,16 +357,24 @@ class PanelGameMap extends GameSettings {
 
     // Метод проверяет наличие выигрышной комбинации
     private boolean checkWin(int player) {
+    	int scor = cellsCount*20-(cellsCount-3)*25+(combToWin-3)*35;
         for(int i = 0; i < cellsCount; i++)
             for(int j = 0; j < cellsCount; j++) {
                 if(checkLine(i, j, 1, 0, combToWin, player) ||
                         checkLine(i, j, 0, 1, combToWin, player) ||
                         checkLine(i, j, 1, 1, combToWin, player) ||
                         checkLine(i, j, 1, -1, combToWin, player)) {
-                    if(player == 1)
+                    if(player == 1) {
                         gameOver = " " + txtNamePlayer1.getText() + " WON";
+                        if(player == 1 && typePlr1.equals("Human"))
+                        	winnerName = player1Name;
+                        	winnerScore = scor;
+                    }
                     if(player == 2)
                         gameOver = " " + txtNamePlayer2.getText() + " WON";
+                    	if(player == 2 && typePlr2.equals("Human"))
+                    		winnerName = player2Name;
+                    		winnerScore = scor;
                     return true;
                 }
             }
@@ -385,25 +402,19 @@ class PanelGameMap extends GameSettings {
                     return false;
             }
         }
-
+        
+        score = 0;
         return true;
     }
 
 //----------------------------------------------------------------------
 
     private void gameOverWindow() {
-        System.out.println(9);
-
-//        Panel pnlGameOver = new Panel();
-//        pnlGameOver.setBackground(Color.LIGHT_GRAY);
-//        pnlGameOver.setLayout(new GridBagLayout());
-//        pnlGameMap.add(pnlGameOver, new GridLayout(2, 2));
 
         Frame frmGameOver = new Frame();
         frmGameOver.setBackground(Color.LIGHT_GRAY);
-        frmGameOver.setBounds(300, 50, 200, 200);
+        frmGameOver.setBounds(OX + 160, OY + 250, 200, 200);
         frmGameOver.setLayout(new GridBagLayout());
-
         Font fntGameOver = new Font("GameOver", Font.BOLD, 18);
         Button btnPlayAgain = new Button("Play Again");
         Button btnMainMenu = new Button("Main Menu");
