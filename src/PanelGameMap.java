@@ -69,27 +69,61 @@ class PanelGameMap extends GameSettings {
         setLayout(new GridLayout(3, 3));
         pnlApp.add(this, "Game Map");
 
-        // Обработка клика по игровому полю с последующей постановкой фишки
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent me) {
-                mouseX = me.getX();
-                mouseY = me.getY();
-                if((currentPlr == 1 && typePlr1.equals("Human")) || (currentPlr == 2 && typePlr2.equals("Human"))) {
-                    humanTurn();
-                    gameOver();
-                }
-                else {
-                    if((currentPlr == 1 && typePlr1.equals("AI")) || (currentPlr == 2 && typePlr2.equals("AI"))) {
-                        aiTurn();
-                        gameOver();
-                    }
-                }
-                player = winnerName;	
-                score = winnerScore;
-            }
-        });
+        // Пробуем сделать ход работающий через поток
+//      Thread thrdPlr1 = new Thread(new Runnable() {
+//      	@Override
+//      	public void run() {
+//              if(typePlr1.equals("Human")) {
+//              	try {
+//						Thread.sleep(100);
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+//                  humanTurn();
+//                  gameOver();
+//              } else if(typePlr1.equals("AI")) {
+//              	try {
+//						Thread.sleep(500);
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+//                  aiTurn();
+//                  gameOver();
+//              }
+//      	}
+//      });
+//      Thread thrdPlr2 = new Thread(new Runnable() {
+//      	@Override
+//      	public void run() {
+//              if(typePlr2.equals("Human")) {
+//              	try {
+//						Thread.sleep(100);
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+//                  humanTurn();
+//                  gameOver();
+//              } else if(typePlr2.equals("AI")) {
+//              	try {
+//						Thread.sleep(500);
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+//                  aiTurn();
+//                  gameOver();
+//              }
+//      	}
+//      });
 
+        
+        addMouseListener(new MouseAdapter(){
+        	@Override
+        	public void mouseClicked(MouseEvent me) {
+        		mouseX = me.getX();
+        		mouseY = me.getY();
+        	}
+        });
+        
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -100,6 +134,111 @@ class PanelGameMap extends GameSettings {
                 mapCells = new int[cellsCount][cellsCount];
             }
         });
+        
+        
+        
+       	Thread thrdPlr1 = new Thread(new Runnable() {
+       		@Override
+       		public void run() {
+       			while(true) {
+       				if(!gameOver.equals("Nothing"))
+       					break;
+       				try {
+						Thread.sleep(100);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+       					
+       				if(typePlr1.equals("Human") && currentPlr == 1) {
+        				try {
+        					Thread.sleep(200);
+        				} catch (InterruptedException e) {
+        					e.printStackTrace();
+        				}
+        				humanTurn();
+        				gameOver();
+        			} else if(typePlr1.equals("AI") && currentPlr == 1) {
+        				try {
+        					Thread.sleep(1000);
+        				} catch (InterruptedException e) {
+        					e.printStackTrace();
+        				}
+        				aiTurn();
+        				gameOver();
+        				
+        			}
+       			}
+        	}
+        });
+        thrdPlr1.start();
+        
+
+       	Thread thrdPlr2 = new Thread(new Runnable() {
+       		@Override
+       		public void run() {
+       			while(true) {
+       				if(!gameOver.equals("Nothing"))
+       					break;
+       				try {
+						Thread.sleep(100);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+       					
+       				if(typePlr2.equals("Human") && currentPlr == 2) {
+        				try {
+        					Thread.sleep(200);
+        				} catch (InterruptedException e) {
+        					e.printStackTrace();
+        				}
+        				humanTurn();
+        				gameOver();
+        			} else if(typePlr2.equals("AI") && currentPlr == 2) {
+        				try {
+        					Thread.sleep(1000);
+        				} catch (InterruptedException e) {
+        					e.printStackTrace();
+        				}
+        				aiTurn();
+        				gameOver();
+        			}
+       			}
+        	}
+        });
+        thrdPlr2.start();
+        
+        
+        // Обработка клика по игровому полю с последующей постановкой фишки
+//        addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent me) {
+//                mouseX = me.getX();
+//                mouseY = me.getY();
+//                if((currentPlr == 1 && typePlr1.equals("Human")) || (currentPlr == 2 && typePlr2.equals("Human"))) {
+//                    humanTurn();
+//                    gameOver();
+//                }
+//                else {
+//                    if((currentPlr == 1 && typePlr1.equals("AI")) || (currentPlr == 2 && typePlr2.equals("AI"))) {
+//                        aiTurn();
+//                        gameOver();
+//                    }
+//                }
+//                player = winnerName;	
+//                score = winnerScore;
+//            }
+//        });
+
+//        addComponentListener(new ComponentAdapter() {
+//            @Override
+//            public void componentResized(ComponentEvent e) {
+//                width();
+//                height();
+//                cellWidth = fieldWidth/cellsCount;
+//                cellHeight = fieldHeight/cellsCount;
+//                mapCells = new int[cellsCount][cellsCount];
+//            }
+//        });
     }
 
 //----------------------------------------------------------------------
@@ -116,7 +255,7 @@ class PanelGameMap extends GameSettings {
 //----------------------------------------------------------------------
 
     @Override
-    public void paint(Graphics g) {
+    public synchronized void paint(Graphics g) {
 //        System.out.println(4);
         Graphics2D g2 = (Graphics2D) g;
 
@@ -258,7 +397,7 @@ class PanelGameMap extends GameSettings {
 //----------------------------------------------------------------------
 
     // Метод отвечает за ход человека
-    private void humanTurn() {
+    private synchronized void humanTurn() {
         int cellX = mouseX/cellWidth;
         int cellY = mouseY/cellHeight;
         if(mapCells[cellX][cellY] == 0) {
@@ -279,7 +418,7 @@ class PanelGameMap extends GameSettings {
 
 
     // Доработанный AI компьютера, который умеет блокировать выигрышные комбинации
-    private void aiTurn() {
+    private synchronized void aiTurn() {
         int x = -1, y = -1;
         aiSearchCombo = true;       // сигнализируем программе, что могут быть ложные срабатывания условия победы
 
@@ -339,7 +478,7 @@ class PanelGameMap extends GameSettings {
 //----------------------------------------------------------------------
 
     // Метод проверяет все возможные варианты завершения игры
-    private void gameOver() {
+    private synchronized void gameOver() {
         if(checkWin(oppositePlr)) {
             for(int i = 0; i < cellsCount; i++)
                 for(int j = 0; j < cellsCount; j++)
@@ -356,7 +495,7 @@ class PanelGameMap extends GameSettings {
     }
 
     // Метод проверяет наличие выигрышной комбинации
-    private boolean checkWin(int player) {
+    private synchronized boolean checkWin(int player) {
     	int scor = cellsCount*20-(cellsCount-3)*25+(combToWin-3)*35;
         for(int i = 0; i < cellsCount; i++)
             for(int j = 0; j < cellsCount; j++) {
@@ -409,7 +548,7 @@ class PanelGameMap extends GameSettings {
 
 //----------------------------------------------------------------------
 
-    private void gameOverWindow() {
+    private synchronized void gameOverWindow() {
 
         Frame frmGameOver = new Frame();
         frmGameOver.setBackground(Color.LIGHT_GRAY);
